@@ -17,6 +17,8 @@ void heartbeat_led_initialize(heartbeat_led_t* led,  GPIO_TypeDef* GPIOx, uint16
     led->gpio_pin = GPIO_Pin;
     led->period_ms = period;
 
+    led->last_toggle_tick = 0;
+
     // active high, initial state OFF
     heartbeat_led_off(led);
 }

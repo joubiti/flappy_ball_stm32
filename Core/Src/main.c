@@ -22,6 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "heartbeat.h"
+#include "button.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -44,6 +45,7 @@ SPI_HandleTypeDef hspi1;
 
 /* USER CODE BEGIN PV */
 heartbeat_led_t heartbeat_led;
+button_t user_btn;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -91,6 +93,7 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   heartbeat_led_initialize(&heartbeat_led, GPIOA, GPIO_PIN_5, 1000);
+  button_initialize(&user_btn, GPIOC, GPIO_PIN_13);
   /* USER CODE END 2 */
 
   /* Infinite loop */
