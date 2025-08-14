@@ -41,6 +41,8 @@ Core/Src/heartbeat.c \
 Core/Src/button.c \
 Core/Src/oled.c \
 Core/Src/graphics_backend.c \
+Core/Src/ball.c \
+Core/Src/game_render.c \
 UGUI/ugui.c \
 Core/Src/stm32g0xx_it.c \
 Core/Src/stm32g0xx_hal_msp.c \

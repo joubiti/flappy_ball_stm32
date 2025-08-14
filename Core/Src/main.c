@@ -25,6 +25,8 @@
 #include "button.h"
 #include "oled.h"
 #include "graphics_backend.h"
+#include "ball.h"
+#include "game_render.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -50,6 +52,7 @@ heartbeat_led_t heartbeat_led;
 button_t user_btn;
 oled_screen_t oled;
 graphics_backend_t backend;
+ball_t ball;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -104,6 +107,8 @@ int main(void)
 
   graphics_backend_init(&backend, &oled);
 
+  ball_init(&ball, 30, 30, 5);
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -113,7 +118,15 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-    UG_PutString(0, 50, "hello");
+
+    oled_clear_screen(&oled);
+    if(is_button_pressed(&user_btn, HAL_GetTick()))
+    {
+      ball_jump(&ball);
+    }
+    ball_update(&ball, HAL_GetTick());
+    game_render_ball(&ball);
+
 
     heartbeat_led_toggle(&heartbeat_led, HAL_GetTick());
     graphics_backend_update(&backend, HAL_GetTick());

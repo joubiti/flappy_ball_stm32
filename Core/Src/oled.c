@@ -122,7 +122,7 @@ void oled_clear_screen(oled_screen_t* oled) {
     memset(oled->fb, 0, 1024);  // Clear the entire 1024-byte frame buffer
 
     // Send the cleared frame buffer to the OLED to update the display
-    oled_update(oled);
+    // oled_update(oled);
 }
 
 

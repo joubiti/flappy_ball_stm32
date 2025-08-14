@@ -1,11 +1,13 @@
 {
 
-    "cortex-debug.variableUseNaturalFormat": false,
+    "cortex-debug.variableUseNaturalFormat": true,
     "C_Cpp.errorSquiggles": "enabled",
     "files.associations": {
         "heartbeat.h": "c",
         "graphics_backend.h": "c",
         "oled.h": "c",
-        "ugui.h": "c"
+        "ugui.h": "c",
+        "game_render.h": "c",
+        "ball.h": "c"
     }
 }
