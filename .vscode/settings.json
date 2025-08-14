@@ -3,6 +3,9 @@
     "cortex-debug.variableUseNaturalFormat": false,
     "C_Cpp.errorSquiggles": "enabled",
     "files.associations": {
-        "heartbeat.h": "c"
+        "heartbeat.h": "c",
+        "graphics_backend.h": "c",
+        "oled.h": "c",
+        "ugui.h": "c"
     }
 }

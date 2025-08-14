@@ -24,6 +24,7 @@
 #include "heartbeat.h"
 #include "button.h"
 #include "oled.h"
+#include "graphics_backend.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -48,6 +49,7 @@ SPI_HandleTypeDef hspi1;
 heartbeat_led_t heartbeat_led;
 button_t user_btn;
 oled_screen_t oled;
+graphics_backend_t backend;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -96,21 +98,11 @@ int main(void)
 
   heartbeat_led_initialize(&heartbeat_led, GPIOA, GPIO_PIN_5, 1000);
   button_initialize(&user_btn, GPIOC, GPIO_PIN_13);
-  oled_initialize(&oled, &hspi1);
 
+  oled_initialize(&oled, &hspi1);
   oled_clear_screen(&oled);
 
-  oled_draw_pixel(&oled, 10, 52, 1);
-  oled_draw_pixel(&oled, 10, 53, 1);
-  oled_draw_pixel(&oled, 10, 54, 1);
-  oled_draw_pixel(&oled, 10, 55, 1);
-
-  oled_draw_pixel(&oled, 13, 52, 1);
-  oled_draw_pixel(&oled, 13, 53, 1);
-  oled_draw_pixel(&oled, 13, 54, 1);
-  oled_draw_pixel(&oled, 13, 55, 1);
-
-  oled_update(&oled);
+  graphics_backend_init(&backend, &oled);
 
   /* USER CODE END 2 */
 
@@ -121,7 +113,10 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+    UG_PutString(0, 50, "hello");
+
     heartbeat_led_toggle(&heartbeat_led, HAL_GetTick());
+    graphics_backend_update(&backend, HAL_GetTick());
   }
   /* USER CODE END 3 */
 }

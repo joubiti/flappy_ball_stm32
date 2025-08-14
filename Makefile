@@ -40,6 +40,8 @@ Core/Src/main.c \
 Core/Src/heartbeat.c \
 Core/Src/button.c \
 Core/Src/oled.c \
+Core/Src/graphics_backend.c \
+UGUI/ugui.c \
 Core/Src/stm32g0xx_it.c \
 Core/Src/stm32g0xx_hal_msp.c \
 Drivers/STM32G0xx_HAL_Driver/Src/stm32g0xx_hal_spi.c \
@@ -121,7 +123,8 @@ C_INCLUDES =  \
 -IDrivers/STM32G0xx_HAL_Driver/Inc \
 -IDrivers/STM32G0xx_HAL_Driver/Inc/Legacy \
 -IDrivers/CMSIS/Device/ST/STM32G0xx/Include \
--IDrivers/CMSIS/Include
+-IDrivers/CMSIS/Include \
+-IUGUI
 
 
 # compile gcc flags
