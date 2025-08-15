@@ -28,6 +28,7 @@
 #include "ball.h"
 #include "pipe.h"
 #include "game_render.h"
+#include "game_engine.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -108,9 +109,7 @@ int main(void)
   oled_clear_screen(&oled);
 
   graphics_backend_init(&backend, &oled);
-
-  ball_init(&ball, 30, 30, 3);
-  pipe_init(&pipe);
+  game_engine_init();
 
   /* USER CODE END 2 */
 
@@ -123,19 +122,8 @@ int main(void)
     /* USER CODE BEGIN 3 */
 
     oled_clear_screen(&oled);
-    if(is_button_pressed(&user_btn, HAL_GetTick()))
-    {
-      ball_jump(&ball);
-    }
-    ball_update(&ball, HAL_GetTick());
-    pipe_update(&pipe);
 
-    game_render_ball(&ball);
-    game_render_pipe(&pipe);
-
-    // UG_FillFrame(0, 0, 2, 60, 1);
-    // UG_FillFrame(125, 0, 125-2, 63, 1);
-
+    game_engine_step(is_button_pressed(&user_btn, HAL_GetTick()));
     heartbeat_led_toggle(&heartbeat_led, HAL_GetTick());
     graphics_backend_update(&backend, HAL_GetTick());
   }
