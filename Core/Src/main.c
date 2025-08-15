@@ -26,6 +26,7 @@
 #include "oled.h"
 #include "graphics_backend.h"
 #include "ball.h"
+#include "pipe.h"
 #include "game_render.h"
 /* USER CODE END Includes */
 
@@ -53,6 +54,7 @@ button_t user_btn;
 oled_screen_t oled;
 graphics_backend_t backend;
 ball_t ball;
+pipe_t pipe;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -107,7 +109,8 @@ int main(void)
 
   graphics_backend_init(&backend, &oled);
 
-  ball_init(&ball, 30, 30, 5);
+  ball_init(&ball, 30, 30, 3);
+  pipe_init(&pipe);
 
   /* USER CODE END 2 */
 
@@ -125,8 +128,13 @@ int main(void)
       ball_jump(&ball);
     }
     ball_update(&ball, HAL_GetTick());
-    game_render_ball(&ball);
+    pipe_update(&pipe);
 
+    game_render_ball(&ball);
+    game_render_pipe(&pipe);
+
+    // UG_FillFrame(0, 0, 2, 60, 1);
+    // UG_FillFrame(125, 0, 125-2, 63, 1);
 
     heartbeat_led_toggle(&heartbeat_led, HAL_GetTick());
     graphics_backend_update(&backend, HAL_GetTick());

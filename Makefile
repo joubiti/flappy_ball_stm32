@@ -43,6 +43,7 @@ Core/Src/oled.c \
 Core/Src/graphics_backend.c \
 Core/Src/ball.c \
 Core/Src/game_render.c \
+Core/Src/pipe.c \
 UGUI/ugui.c \
 Core/Src/stm32g0xx_it.c \
 Core/Src/stm32g0xx_hal_msp.c \

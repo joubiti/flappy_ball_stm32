@@ -8,6 +8,8 @@
         "oled.h": "c",
         "ugui.h": "c",
         "game_render.h": "c",
-        "ball.h": "c"
+        "ball.h": "c",
+        "stdlib.h": "c",
+        "pipe.h": "c"
     }
 }
