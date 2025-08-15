@@ -7,8 +7,8 @@ static oled_screen_t* s_oled = NULL;
 
 static void backend_draw_pixel(UG_S16 x, UG_S16 y, UG_COLOR color)
 {
-    // uint8_t oled_color = (color == C_WHITE) ? 1 : 0;
-    oled_draw_pixel(s_oled, (uint16_t)x, (uint16_t)y, 1);
+    uint8_t oled_color = (color != C_BLACK) ? 1 : 0;
+    oled_draw_pixel(s_oled, (uint16_t)x, (uint16_t)y, oled_color);
 }
 
 void graphics_backend_init(graphics_backend_t* backend, oled_screen_t* oled)

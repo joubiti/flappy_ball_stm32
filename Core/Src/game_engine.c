@@ -7,32 +7,62 @@
 static ball_t ball;
 static pipe_t pipe;
 
+typedef enum{
+    START_MENU,
+    GAME_MODE,
+    GAME_OVER
+}game_engine_state;
+
+typedef struct{
+    game_engine_state current_state;
+}game_engine_t;
+
+static game_engine_t game_engine;
 
 static uint8_t check_for_collision();
 
 void game_engine_init()
 {
+  game_engine.current_state = START_MENU;
   ball_init(&ball, 30, 30, 3);
   pipe_init(&pipe);
 }
 
 void game_engine_step(uint8_t btn_pressed)
 {
-    if(btn_pressed)
-        ball_jump(&ball);
+    switch(game_engine.current_state)
+    {
+        case START_MENU:
+            game_render_start_menu();
+            if(btn_pressed)
+                game_engine.current_state = GAME_MODE;
+            break;
+        case GAME_MODE:
+            if(btn_pressed)
+                ball_jump(&ball);
 
-    ball_update(&ball, HAL_GetTick());
-    pipe_update(&pipe);
+            ball_update(&ball, HAL_GetTick());
+            pipe_update(&pipe);
 
-    game_render_ball(&ball);
-    game_render_pipe(&pipe);
+            game_render_ball(&ball);
+            game_render_pipe(&pipe);
 
-    volatile uint8_t status = check_for_collision();
-    if(status == 1){
-        while(1);
+            if(check_for_collision())
+                game_engine.current_state = GAME_OVER;
+            break;
+        case GAME_OVER:
+            game_render_gameover(pipe.cnt);
+            if(btn_pressed)
+            {
+                ball_init(&ball, 30, 30, 3);
+                pipe_init(&pipe);
+                game_engine.current_state = GAME_MODE;
+            }
+            break;
+        default:
+            game_render_start_menu();
     }
 }
-
 
 static uint8_t check_for_collision()
 {

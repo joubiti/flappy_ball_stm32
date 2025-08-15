@@ -25,9 +25,6 @@
 #include "button.h"
 #include "oled.h"
 #include "graphics_backend.h"
-#include "ball.h"
-#include "pipe.h"
-#include "game_render.h"
 #include "game_engine.h"
 /* USER CODE END Includes */
 
@@ -54,8 +51,6 @@ heartbeat_led_t heartbeat_led;
 button_t user_btn;
 oled_screen_t oled;
 graphics_backend_t backend;
-ball_t ball;
-pipe_t pipe;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -102,14 +97,36 @@ int main(void)
   MX_SPI1_Init();
   /* USER CODE BEGIN 2 */
 
+  /**********************   Heartbeat onboard LED, 1 Hz ******************/
   heartbeat_led_initialize(&heartbeat_led, GPIOA, GPIO_PIN_5, 1000);
-  button_initialize(&user_btn, GPIOC, GPIO_PIN_13);
+  /********************************************************************* */
 
+
+
+  /**********************    User button (SPACE key), with debounce (polling) **************/
+  button_initialize(&user_btn, GPIOC, GPIO_PIN_13);
+  /*****************************************************************************************/
+
+
+
+
+  /***********************  4-wire SPI SS1306 OLED driver  **********************************/
   oled_initialize(&oled, &hspi1);
   oled_clear_screen(&oled);
+  /*****************************************************************************************/
 
+
+
+  /*********************** Graphics backend, hooking up our OLED driver to µGUI library ****/
   graphics_backend_init(&backend, &oled);
+  /*****************************************************************************************/
+
+
+
+
+  /*********************** The Game engine state machine, takes user input and calls the game render module to draw the actual game ***/
   game_engine_init();
+  /************************************************************************************************************************************/
 
   /* USER CODE END 2 */
 
@@ -122,10 +139,16 @@ int main(void)
     /* USER CODE BEGIN 3 */
 
     oled_clear_screen(&oled);
-
+    
+    /* Dispatch button press event to the game engine state machine */
     game_engine_step(is_button_pressed(&user_btn, HAL_GetTick()));
+
+    /* Toggle Heartbeat LED (1 Hz) */
     heartbeat_led_toggle(&heartbeat_led, HAL_GetTick());
+
+    /* Update graphics (50 Hz), using low-level OLED calls and µGUI */
     graphics_backend_update(&backend, HAL_GetTick());
+
   }
   /* USER CODE END 3 */
 }

@@ -16,6 +16,7 @@ void pipe_init(pipe_t* pipe)
     pipe->gap = 25; // initial gap, will be randomized after each update
     pipe->y_gap = 8;
     pipe->width = 2;
+    pipe->cnt = 0;
     pipe->velocity = 0.0556f;
 }
 
@@ -27,6 +28,7 @@ void pipe_update(pipe_t* pipe)
         pipe->x = 125;
         pipe->gap = rand_range(MIN_GAP, MAX_GAP);
         pipe->y_gap = rand_range(10, 20);
+        pipe->cnt++;
         // pipe->velocity = ; speed control eventually
     }
 }
