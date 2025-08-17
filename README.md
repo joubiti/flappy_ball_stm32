@@ -32,7 +32,7 @@ while(1){
     graphics_backend_update(&backend, HAL_GetTick());
   }
 ```
-µGUI was used at the embedded GUI graphics library of choice because it's lightweight and because we don't need much for this game, so I've had the write the graphics backend module to plug our pixel OLED functions to the µGUI library.
+µGUI was used as the embedded GUI graphics library of choice because it's lightweight and because we don't need much for this game, so I've had to write the graphics backend module to plug our pixel OLED functions into the µGUI library.
 Very simple, and very cool.
 
 ```
